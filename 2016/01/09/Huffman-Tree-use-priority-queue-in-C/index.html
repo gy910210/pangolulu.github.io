@@ -6,14 +6,18 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://pangolulu.github.io">
-  <title>Archives: 2016/10 | pangolulu的博客</title>
+  <title>Huffman Tree (use priority queue) in C++ | pangolulu的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="pangolulu的博客">
-<meta property="og:url" content="http://pangolulu.github.io/archives/2016/10/index.html">
+  <meta name="description" content="Use the priority queue to implement Huffman Tree, written in C++ and use STL.12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455#include &amp;lt;iostream&amp;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Huffman Tree (use priority queue) in C++">
+<meta property="og:url" content="http://pangolulu.github.io/2016/01/09/Huffman-Tree-use-priority-queue-in-C/index.html">
 <meta property="og:site_name" content="pangolulu的博客">
+<meta property="og:description" content="Use the priority queue to implement Huffman Tree, written in C++ and use STL.12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455#include &amp;lt;iostream&amp;">
+<meta property="og:updated_time" content="2016-01-09T07:58:20.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="pangolulu的博客">
+<meta name="twitter:title" content="Huffman Tree (use priority queue) in C++">
+<meta name="twitter:description" content="Use the priority queue to implement Huffman Tree, written in C++ and use STL.12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455#include &amp;lt;iostream&amp;">
   
   
     <link rel="icon" href="/assets/img/pangolulu.jpg">
@@ -48,8 +52,6 @@
 			
 				<li><a href="/">主页</a></li>
 	        
-				<li><a href="/tags/随笔">随笔</a></li>
-	        
 			</ul>
 		</nav>
 		<nav class="header-smart-menu">
@@ -70,6 +72,9 @@
     			
     			
             
+    			
+    			<a class="js-smart-menu" data-idx="3" href="javascript:void(0)">关于我</a>
+    			
     			
             
 		</nav>
@@ -114,8 +119,6 @@
 				
 					<li><a href="/">主页</a></li>
 		        
-					<li><a href="/tags/随笔">随笔</a></li>
-		        
 				</ul>
 			</nav>
 			<nav class="header-nav">
@@ -136,49 +139,89 @@
 </nav>
 
       <div class="body-wrap">
+        <article id="post-Huffman-Tree-use-priority-queue-in-C" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
         
   
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2016" class="archive-year">2016</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/10/27/hello-world/" class="archive-article-date">
-  	<time datetime="2016-10-27T12:16:53.000Z" itemprop="datePublished"><i class="icon-clock"></i>2016-10-27</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/10/27/hello-world/">Hello World</a>
+    <h1 class="article-title" itemprop="name">
+      Huffman Tree (use priority queue) in C++
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Use the priority queue to implement Huffman Tree, written in C++ and use STL.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div></pre></td><td class="code"><pre><div class="line">#include &lt;iostream&gt;</div><div class="line">#include &lt;stdlib.h&gt;</div><div class="line">#include &lt;queue&gt;</div><div class="line">#include &lt;vector&gt;</div><div class="line">using namespace std;</div><div class="line"></div><div class="line">struct Node</div><div class="line">&#123;</div><div class="line">    int val;</div><div class="line">    struct Node * left;</div><div class="line">    struct Node * right;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">typedef struct Node * p_Node;</div><div class="line"></div><div class="line">struct cmp</div><div class="line">&#123;</div><div class="line">    bool operator () (p_Node const &amp;p1, p_Node const &amp;p2)</div><div class="line">    &#123;</div><div class="line">        return p1-&gt;val &gt; p2-&gt;val;</div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">p_Node createNode(int val, p_Node left, p_Node right)</div><div class="line">&#123;</div><div class="line">    p_Node node = (p_Node)malloc(sizeof(struct Node));</div><div class="line">    node-&gt;val = val;</div><div class="line">    node-&gt;left = left;</div><div class="line">    node-&gt;right = right;</div><div class="line"></div><div class="line">    return node;</div><div class="line">&#125;</div><div class="line"></div><div class="line">p_Node buildTree(int * vec, int n)</div><div class="line">&#123;</div><div class="line">    priority_queue&lt;p_Node, vector&lt;p_Node&gt;, cmp&gt; forest;</div><div class="line"></div><div class="line">    for(int i = 0; i &lt; n; i++)</div><div class="line">    &#123;</div><div class="line">        p_Node node = createNode(vec[i], NULL, NULL);</div><div class="line">        forest.push(node);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    while(forest.size() &gt; 1)</div><div class="line">    &#123;</div><div class="line">        p_Node node1 =  forest.top();</div><div class="line">        forest.pop();</div><div class="line">        p_Node node2 =  forest.top();</div><div class="line">        forest.pop();</div><div class="line">        cout&lt;&lt;node1-&gt;val&lt;&lt;&quot;  &quot;&lt;&lt;node2-&gt;val&lt;&lt;endl;</div><div class="line">        p_Node new_node = createNode(node1-&gt;val + node2-&gt;val, node1, node2);</div><div class="line">        forest.push(new_node);</div><div class="line">    &#125;</div><div class="line">    return forest.top();</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      <a href="/2016/01/09/Huffman-Tree-use-priority-queue-in-C/" class="archive-article-date">
+  	<time datetime="2016-01-09T07:56:38.000Z" itemprop="datePublished"><i class="icon-clock"></i>2016-01-09</time>
+</a>
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/algorithm/">algorithm</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<i class="icon-price-tags"></i>
+	<a class="article-category-link" href="/categories/algorithm/">algorithm</a>
+	</div>
+
+
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
-  
-  
-    </div></section>
-  
 
-    
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2015/10/27/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">hello world</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">Share to: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+	    <a class="jiathis_button_twitter"></a>
+	    <a class="jiathis_button_plus"></a> 
+	    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="//v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+
 
 
       </div>
@@ -201,8 +244,8 @@
 		mathjax: false,
 		animate: true,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: ture,
@@ -227,6 +270,8 @@
       <li data-hook="tools-section-friends"><span class="text">友链</span><i class="icon-link"></i></li>
     
     
+      <li data-hook="tools-section-me"><span class="text">我</span><i class="icon-smile"></i></li>
+    
   </ul>
   <div class="tools-wrap">
     
@@ -237,7 +282,7 @@
     
     	<section class="tools-section tools-section-tag">
     			<div class="widget tagcloud" id="js-tagcloud">
-    				
+    				<a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/个人/" style="font-size: 10px;">个人</a>
     			</div>
     	</section>
     
@@ -264,6 +309,12 @@
     	</section>
     
 
+    
+    	<section class="tools-section tools-section-me">
+  	  	
+  	  		<div class="aboutme-wrap" id="js-aboutme">pangolulu, &lt;br&gt;&lt;br&gt;上海交通大学计算机硕士, &lt;br&gt;&lt;br&gt;专注机器学习与自然语言处理</div>
+  	  	
+    	</section>
     
   </div>
   

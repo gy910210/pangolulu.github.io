@@ -48,8 +48,6 @@
 			
 				<li><a href="/">主页</a></li>
 	        
-				<li><a href="/tags/随笔">随笔</a></li>
-	        
 			</ul>
 		</nav>
 		<nav class="header-smart-menu">
@@ -70,6 +68,9 @@
     			
     			
             
+    			
+    			<a class="js-smart-menu" data-idx="3" href="javascript:void(0)">关于我</a>
+    			
     			
             
 		</nav>
@@ -114,8 +115,6 @@
 				
 					<li><a href="/">主页</a></li>
 		        
-					<li><a href="/tags/随笔">随笔</a></li>
-		        
 				</ul>
 			</nav>
 			<nav class="header-nav">
@@ -138,6 +137,61 @@
       <div class="body-wrap">
         
   
+    <article id="post-Huffman-Tree-use-priority-queue-in-C" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/01/09/Huffman-Tree-use-priority-queue-in-C/">Huffman Tree (use priority queue) in C++</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Use the priority queue to implement Huffman Tree, written in C++ and use STL.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div></pre></td><td class="code"><pre><div class="line">#include &lt;iostream&gt;</div><div class="line">#include &lt;stdlib.h&gt;</div><div class="line">#include &lt;queue&gt;</div><div class="line">#include &lt;vector&gt;</div><div class="line">using namespace std;</div><div class="line"></div><div class="line">struct Node</div><div class="line">&#123;</div><div class="line">    int val;</div><div class="line">    struct Node * left;</div><div class="line">    struct Node * right;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">typedef struct Node * p_Node;</div><div class="line"></div><div class="line">struct cmp</div><div class="line">&#123;</div><div class="line">    bool operator () (p_Node const &amp;p1, p_Node const &amp;p2)</div><div class="line">    &#123;</div><div class="line">        return p1-&gt;val &gt; p2-&gt;val;</div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">p_Node createNode(int val, p_Node left, p_Node right)</div><div class="line">&#123;</div><div class="line">    p_Node node = (p_Node)malloc(sizeof(struct Node));</div><div class="line">    node-&gt;val = val;</div><div class="line">    node-&gt;left = left;</div><div class="line">    node-&gt;right = right;</div><div class="line"></div><div class="line">    return node;</div><div class="line">&#125;</div><div class="line"></div><div class="line">p_Node buildTree(int * vec, int n)</div><div class="line">&#123;</div><div class="line">    priority_queue&lt;p_Node, vector&lt;p_Node&gt;, cmp&gt; forest;</div><div class="line"></div><div class="line">    for(int i = 0; i &lt; n; i++)</div><div class="line">    &#123;</div><div class="line">        p_Node node = createNode(vec[i], NULL, NULL);</div><div class="line">        forest.push(node);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    while(forest.size() &gt; 1)</div><div class="line">    &#123;</div><div class="line">        p_Node node1 =  forest.top();</div><div class="line">        forest.pop();</div><div class="line">        p_Node node2 =  forest.top();</div><div class="line">        forest.pop();</div><div class="line">        cout&lt;&lt;node1-&gt;val&lt;&lt;&quot;  &quot;&lt;&lt;node2-&gt;val&lt;&lt;endl;</div><div class="line">        p_Node new_node = createNode(node1-&gt;val + node2-&gt;val, node1, node2);</div><div class="line">        forest.push(new_node);</div><div class="line">    &#125;</div><div class="line">    return forest.top();</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      <a href="/2016/01/09/Huffman-Tree-use-priority-queue-in-C/" class="archive-article-date">
+  	<time datetime="2016-01-09T07:56:38.000Z" itemprop="datePublished"><i class="icon-clock"></i>2016-01-09</time>
+</a>
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/algorithm/">algorithm</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<i class="icon-price-tags"></i>
+	<a class="article-category-link" href="/categories/algorithm/">algorithm</a>
+	</div>
+
+
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+
+
+  
     <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -148,7 +202,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/27/hello-world/">Hello World</a>
+      <a class="article-title" href="/2015/10/27/hello-world/">hello world</a>
     </h1>
   
 
@@ -156,25 +210,27 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+        <p>第一个个人博客，希望能记录开发、学习和阅读中的感悟与思考。路漫漫，加油！</p>
 
       
     </div>
     <div class="article-info article-info-index">
       
-      <a href="/2016/10/27/hello-world/" class="archive-article-date">
-  	<time datetime="2016-10-27T12:16:53.000Z" itemprop="datePublished"><i class="icon-clock"></i>2016-10-27</time>
+      <a href="/2015/10/27/hello-world/" class="archive-article-date">
+  	<time datetime="2015-10-26T16:29:02.000Z" itemprop="datePublished"><i class="icon-clock"></i>2015-10-27</time>
 </a>
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/个人/">个人</a></li></ul>
+	</div>
+
       
+	<div class="article-category tagcloud">
+	<i class="icon-price-tags"></i>
+	<a class="article-category-link" href="/categories/个人/">个人</a>
+	</div>
+
 
       <div class="clearfix"></div>
     </div>
@@ -240,6 +296,8 @@
       <li data-hook="tools-section-friends"><span class="text">友链</span><i class="icon-link"></i></li>
     
     
+      <li data-hook="tools-section-me"><span class="text">我</span><i class="icon-smile"></i></li>
+    
   </ul>
   <div class="tools-wrap">
     
@@ -250,7 +308,7 @@
     
     	<section class="tools-section tools-section-tag">
     			<div class="widget tagcloud" id="js-tagcloud">
-    				
+    				<a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/个人/" style="font-size: 10px;">个人</a>
     			</div>
     	</section>
     
@@ -277,6 +335,12 @@
     	</section>
     
 
+    
+    	<section class="tools-section tools-section-me">
+  	  	
+  	  		<div class="aboutme-wrap" id="js-aboutme">pangolulu, &lt;br&gt;&lt;br&gt;上海交通大学计算机硕士, &lt;br&gt;&lt;br&gt;专注机器学习与自然语言处理</div>
+  	  	
+    	</section>
     
   </div>
   
