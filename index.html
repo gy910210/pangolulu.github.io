@@ -109,6 +109,8 @@
 		
             
 		
+            
+		
         
         <!-- render other articles -->
         
@@ -152,8 +154,35 @@
 	
 		<p>Trie树的解释参见：<br><a href="http://blog.csdn.net/hguisu/article/details/8131559" target="_blank" rel="external">http://blog.csdn.net/hguisu/article/details/8131559</a></p>
 <p>下面是用C实现的代码</p>
-<p>头文件：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> TRIE_H</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> TRIE_H</span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> TRIE_SIZE_DEF 128</span></div><div class="line"><span class="keyword">const</span> <span class="keyword">int</span> TRIE_SIZE = TRIE_SIZE_DEF;</div><div class="line"></div><div class="line"><span class="keyword">union</span> NODE_TYPE</div><div class="line">&#123;</div><div class="line">    COMPLETED;</div><div class="line">    UNCOMPLETED;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> Node_</div><div class="line">&#123;</div><div class="line">    <span class="keyword">union</span> NODE_TYPE type;</div><div class="line">    <span class="keyword">char</span> ch;</div><div class="line">    <span class="keyword">struct</span> Node_ *child[TRIE_SIZE];</div><div class="line">&#125;<span class="keyword">trie_t</span>;</div><div class="line"></div><div class="line"><span class="keyword">trie_t</span> * trie_init(<span class="keyword">void</span>);</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">trie_add</span><span class="params">(<span class="keyword">trie_t</span> *trie, <span class="keyword">char</span> *word)</span></span>;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">trie_delete</span><span class="params">(<span class="keyword">trie_t</span> *trie, <span class="keyword">char</span> *word)</span></span>;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">trie_exists</span><span class="params">(<span class="keyword">trie_t</span> *trie, <span class="keyword">char</span> *word)</span></span>;</div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">endif</span> <span class="comment">// TRIE_H</span></span></div></pre></td></tr></table></figure></p>
+<p>头文件：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> TRIE_H</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> TRIE_H</span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> TRIE_SIZE_DEF 128</span></div><div class="line"><span class="keyword">const</span> <span class="keyword">int</span> TRIE_SIZE = TRIE_SIZE_DEF;</div><div class="line"></div><div class="line"><span class="keyword">union</span> NODE_TYPE</div><div class="line">&#123;</div><div class="line">    COMPLETED;</div><div class="line">    UNCOMPLETED;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> Node_</div><div class="line">&#123;</div><div class="line">    <span class="keyword">union</span> NODE_TYPE type;</div><div class="line">    <span class="keyword">char</span> ch;</div><div class="line">    <span class="keyword">struct</span> Node_ *child[TRIE_SIZE];</div><div class="line">&#125;<span class="keyword">trie_t</span>;</div><div class="line"></div><div class="line"><span class="keyword">trie_t</span> * trie_init(<span class="keyword">void</span>);</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">trie_add</span><span class="params">(<span class="keyword">trie_t</span> *trie, <span class="keyword">char</span> *word)</span></span>;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">trie_delete</span><span class="params">(<span class="keyword">trie_t</span> *trie, <span class="keyword">char</span> *word)</span></span>;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">trie_exists</span><span class="params">(<span class="keyword">trie_t</span> *trie, <span class="keyword">char</span> *word)</span></span>;</div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">endif</span> <span class="comment">// TRIE_H</span></span></div></pre></td></tr></table></figure></p>
 <p>源文件：<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div></pre></td><td class="code"><pre><div class="line">#include &lt;stdio.h&gt;</div><div class="line">#include &lt;stdlib.h&gt;</div><div class="line"></div><div class="line">#include "trie.h"</div><div class="line"></div><div class="line">static trie_t * createNewNode(char ch)</div><div class="line">&#123;</div><div class="line">    trie_t *newNode = (trie_t *) malloc(sizeof(trie_t));</div><div class="line">    newNode-&gt;ch = ch;</div><div class="line">    newNode-&gt;type = UNCOMPLETED;</div><div class="line">    int i;</div><div class="line">    for (i = 0; i &lt; TRIE_SIZE; i++)</div><div class="line">    &#123;</div><div class="line">        newNode-&gt;child[i] = NULL;</div><div class="line">    &#125;</div><div class="line">    return newNode;</div><div class="line">&#125;</div><div class="line"></div><div class="line">static int char2int(char ch)</div><div class="line">&#123;</div><div class="line">    return ch - 'a';</div><div class="line">&#125;</div><div class="line"></div><div class="line">trie_t * trie_init(void)</div><div class="line">&#123;</div><div class="line">    return createNewNode('');</div><div class="line">&#125;</div><div class="line"></div><div class="line">void trie_add(trie_t *trie, char *word)</div><div class="line">&#123;</div><div class="line">    char ch;</div><div class="line">    while ((ch = *word++) != '\0')</div><div class="line">    &#123;</div><div class="line">        if (trie-&gt;child[char2int(ch)] == NULL)</div><div class="line">            trie-&gt;child[char2int(ch)] = createNewNode(ch);</div><div class="line">        trie = trie-&gt;child[char2int(ch)];</div><div class="line">    &#125;</div><div class="line">    trie-&gt;type =COMPLETED;</div><div class="line">&#125;</div><div class="line"></div><div class="line">void trie_delete(trie_t *trie, char *word)</div><div class="line">&#123;</div><div class="line">    char ch;</div><div class="line">    while ((ch = *word++) != '\0')</div><div class="line">    &#123;</div><div class="line">        if (trie-&gt;child[char2int(ch)] == NULL)</div><div class="line">            return;</div><div class="line">        trie = trie-&gt;child[char2int(ch)];</div><div class="line">    &#125;</div><div class="line">    trie-&gt;type = UNCOMPLETED;</div><div class="line">&#125;</div><div class="line"></div><div class="line">int trie_exists(trie_t *trie, char *word)</div><div class="line">&#123;</div><div class="line">    char ch;</div><div class="line">    while ((ch = *word++) != '\0')</div><div class="line">    &#123;</div><div class="line">        if (trie-&gt;child[char2int(ch)] == NULL)</div><div class="line">            return 0;</div><div class="line">        trie = trie-&gt;child[char2int(ch)];</div><div class="line">    &#125;</div><div class="line">    return (trie-&gt;tpye == COMPLETED) ? 1 : 0;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+	
+	</div>
+</div>
+
+           
+		
+           
+			  
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> 2015-10-28 </div>
+			<div class="article-title"><a href="/2015/10/28/permutation/" >生成全排列算法（Scala和C++实现）</a></div>						
+		</h3>
+	
+
+
+			  <div class="entry">
+  <div class="row">
+	
+	
+		<p>全排列问题描述为：给定一串数字，生成所有可能的排列。<br>本文给出两类，一种使用C++通过回溯算法，一种使用Scala通过递归来求解。</p>
+<p>首先介绍使用Scala通过递归求解的方法，定义递归关系：对<code>S</code>中的每个<code>x</code>，递归的生成<code>S-x</code>的所有排列的序列，而后将<code>x</code>加到每个序列的前面。这样就能对<code>S</code>里的每个<code>x</code>，产生出了<code>S</code>的所有以<code>x</code>开头的排列。合起来就是所有的排列了。<br>实现的代码如下：<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">permutation</span></span>(xs: <span class="type">List</span>[<span class="type">Int</span>]): <span class="type">Set</span>[<span class="type">List</span>[<span class="type">Int</span>]] =</div><div class="line">  <span class="keyword">if</span> (xs == <span class="type">Nil</span>) <span class="type">Set</span>(<span class="type">Nil</span>)</div><div class="line">  <span class="keyword">else</span> &#123;</div><div class="line">    <span class="keyword">for</span> &#123;</div><div class="line">      i &lt;- xs.indices</div><div class="line">      ys &lt;- func(xs filter (_ != xs(i)))</div><div class="line">    &#125;   <span class="keyword">yield</span> xs(i) :: ys</div><div class="line">  &#125;.toSet</div><div class="line"></div><div class="line">func(<span class="type">List</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>))</div></pre></td></tr></table></figure></p>
+<p>使用回溯法的代码如下：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">permutation</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; vec, <span class="keyword">int</span> s)</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span> (s == vec.size()) &#123;</div><div class="line">        for_each(vec.begin(), vec.end(), [](<span class="keyword">int</span> v) &#123; <span class="built_in">cout</span> &lt;&lt; v &lt;&lt; <span class="string">" "</span>; &#125;);</div><div class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = s; i &lt; vec.size(); i++) &#123;</div><div class="line">        swap(vec[s], vec[i]);</div><div class="line">        func(vec, s+<span class="number">1</span>);</div><div class="line">        swap(vec[s], vec[i]);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>其中，函数参数<code>s</code>表示的是当前序列已经有多少位完成了排列，即前<code>s</code>位完成了排列，当前正在对第<code>s</code>位进行排列。取所有<code>s</code>到<code>size - 1</code>位置的元素作为第<code>s</code>位的数字。回溯的意义是在执行完递归<code>func(vec, s+1);</code>后，需要将之前交换过的元素交换回来，即需要将数组回复原状。</p>
+<p>综上，觉得使用Scala的递归思想考虑还是比较简单的，但效率不敢恭维。</p>
 
 	
 	</div>
@@ -199,7 +228,7 @@
 		<h4>Categories</h4>
 		<ul class="tag_box inline list-unstyled">
 		
-			<li><a href="/categories/算法与数据结构/">算法与数据结构<span>2</span></a></li>
+			<li><a href="/categories/算法与数据结构/">算法与数据结构<span>3</span></a></li>
 		
 		</ul>
 	</div>
@@ -213,6 +242,12 @@
 			<li><a href="/tags/Trie树/">Trie树<span>1</span></a></li>
 		
 			<li><a href="/tags/Huffman-Tree/">Huffman Tree<span>1</span></a></li>
+		
+			<li><a href="/tags/Priority-Queue/">Priority Queue<span>1</span></a></li>
+		
+			<li><a href="/tags/scala/">scala<span>1</span></a></li>
+		
+			<li><a href="/tags/algorithm/">algorithm<span>1</span></a></li>
 		
 		 
 		</ul>
@@ -231,6 +266,10 @@
     
       <li>
         <a href="/2016/01/09/Trie-in-C/" ><i class="fa fa-file-o"></i>Trie (in C)</a>
+      </li>
+    
+      <li>
+        <a href="/2015/10/28/permutation/" ><i class="fa fa-file-o"></i>生成全排列算法（Scala和C++实现）</a>
       </li>
     
   </ul>
