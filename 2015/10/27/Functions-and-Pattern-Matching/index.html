@@ -1,0 +1,301 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Cousera响应式编程 - Functions and Pattern Matching | pangolulu的博客</title>
+  <meta name="author" content="pangolulu">
+  
+  <meta name="description" content="本文是Week 1.2，这一节主要回顾了函数式编程语言中的function和pattern matching的知识，通过回顾了这一知识，你将会发现Scala等函数是编程语言的表达能力是如此之强。
+Case Class当要定义复杂的数据类型时，可以使用Case classes。如下面所示，定义一个JS">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Cousera响应式编程 - Functions and Pattern Matching"/>
+  <meta property="og:site_name" content="pangolulu的博客"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/themes/bootstrap.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+       <a class="navbar-brand" href="/">pangolulu的博客</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class="fa fa-archive"></i>Archives
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="All the categories.">
+			  <i class="fa fa-folder"></i>Categories
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class="fa fa-user"></i>About
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header page-header-inverse ">		
+			<h1 class="title title-inverse "> Cousera响应式编程 - Functions and Pattern Matching</h1>
+		</div>		
+	
+
+
+
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div id="top_meta"></div>
+	<div class="col-md-9">
+	
+
+	<!-- content -->
+	<div class="mypage">		
+	  		
+
+	  <p>本文是Week 1.2，这一节主要回顾了函数式编程语言中的function和pattern matching的知识，通过回顾了这一知识，你将会发现Scala等函数是编程语言的表达能力是如此之强。</p>
+<h4 id="Case-Class"><a href="#Case-Class" class="headerlink" title="Case Class"></a>Case Class</h4><p>当要定义复杂的数据类型时，可以使用Case classes。如下面所示，定义一个JSON数据表示：<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">&#123;   </div><div class="line">	“firstName”: “John”,</div><div class="line">	“lastName”: “Smith”,</div><div class="line">	“address”: &#123;</div><div class="line">		“streetAddress”: “21 2 nd Street”,</div><div class="line">		“state”: “NY”,</div><div class="line">		“postalCode”: 10021</div><div class="line">	&#125;,</div><div class="line">	“phoneNumbers”: [</div><div class="line">		&#123; “type”: “home”, “number”: “212 555 -1234” &#125;,</div><div class="line">		&#123; “type”: “fax”, “number”: “646 555 -4567” &#125;</div><div class="line">	]</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>通过Scala的case class可以抽象为：<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">JSON</span></span></div><div class="line"><span class="keyword">case</span> <span class="class"><span class="keyword">class</span> <span class="title">JSeq</span> (<span class="params">elems: <span class="type">List</span>[<span class="type">JSON</span>]</span>) <span class="keyword">extends</span> <span class="title">JSON</span></span></div><div class="line"><span class="keyword">case</span> <span class="class"><span class="keyword">class</span> <span class="title">JObj</span> (<span class="params">bindings: <span class="type">Map</span>[<span class="type">String</span>, <span class="type">JSON</span>]</span>) <span class="keyword">extends</span> <span class="title">JSON</span></span></div><div class="line"><span class="keyword">case</span> <span class="class"><span class="keyword">class</span> <span class="title">JNum</span> (<span class="params">num: <span class="type">Double</span></span>) <span class="keyword">extends</span> <span class="title">JSON</span></span></div><div class="line"><span class="keyword">case</span> <span class="class"><span class="keyword">class</span> <span class="title">JStr</span> (<span class="params">str: <span class="type">String</span></span>) <span class="keyword">extends</span> <span class="title">JSON</span></span></div><div class="line"><span class="keyword">case</span> <span class="class"><span class="keyword">class</span> <span class="title">JBool</span>(<span class="params">b: <span class="type">Boolean</span></span>) <span class="keyword">extends</span> <span class="title">JSON</span></span></div><div class="line"><span class="keyword">case</span> <span class="class"><span class="keyword">object</span> <span class="title">JNull</span> <span class="keyword">extends</span> <span class="title">JSON</span></span></div></pre></td></tr></table></figure></p>
+<p>所以，可以定义上面的JSON变量为：<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">val</span> data = <span class="type">JObj</span>(<span class="type">Map</span>(</div><div class="line">  <span class="string">"firstName"</span> -&gt; <span class="type">JStr</span>(<span class="string">"John"</span>),</div><div class="line">  <span class="string">"lastName"</span> -&gt; <span class="type">JStr</span>(<span class="string">"Smith"</span>),</div><div class="line">  <span class="string">"address"</span> -&gt; <span class="type">JObj</span>(<span class="type">Map</span>(</div><div class="line">    <span class="string">"streetAddress"</span> -&gt; <span class="type">JStr</span>(<span class="string">"21 2nd Street"</span>),</div><div class="line">    <span class="string">"state"</span> -&gt; <span class="type">JStr</span>(<span class="string">"NY"</span>),</div><div class="line">    <span class="string">"postalCode"</span> -&gt; <span class="type">JNum</span>(<span class="number">10021</span>)</div><div class="line">  )),</div><div class="line">  <span class="string">"phoneNumbers"</span> -&gt; <span class="type">JSeq</span>(<span class="type">List</span>(</div><div class="line">    <span class="type">JObj</span>(<span class="type">Map</span>(</div><div class="line">      <span class="string">"type"</span> -&gt; <span class="type">JStr</span>(<span class="string">"home"</span>), <span class="string">"number"</span> -&gt; <span class="type">JStr</span>(<span class="string">"212 555-1234"</span>)</div><div class="line">    )),</div><div class="line">    <span class="type">JObj</span>(<span class="type">Map</span>(</div><div class="line">      <span class="string">"type"</span> -&gt; <span class="type">JStr</span>(<span class="string">"fax"</span>), <span class="string">"number"</span> -&gt; <span class="type">JStr</span>(<span class="string">"646 555-4567"</span>)</div><div class="line">    )) )) ))</div></pre></td></tr></table></figure></p>
+<h4 id="Pattern-Matching"><a href="#Pattern-Matching" class="headerlink" title="Pattern Matching"></a>Pattern Matching</h4><p>如果我们想要用JSON的格式进行打印要怎么做呢？Scala提供的Pattern Matching语法可以非常方便和优雅的写出递归语法。如下定义了打印函数：<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">JSON</span> </span>&#123;</div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">show</span></span>: <span class="type">String</span> = <span class="keyword">this</span> <span class="keyword">match</span> &#123;</div><div class="line">    <span class="keyword">case</span> <span class="type">JSeq</span>(elems) =&gt; <span class="string">"["</span> + (elems map (_.show) mkString <span class="string">", "</span>) + <span class="string">"]"</span></div><div class="line">    <span class="keyword">case</span> <span class="type">JObj</span>(bindings) =&gt;</div><div class="line">      <span class="keyword">val</span> assocs = bindings map &#123;</div><div class="line">        <span class="keyword">case</span> (key, value) =&gt; <span class="string">"\""</span> + key + <span class="string">"\": "</span> + value.show</div><div class="line">      &#125;</div><div class="line">      <span class="string">"&#123;"</span> + (assocs mkString <span class="string">", "</span>) + <span class="string">"&#125;"</span></div><div class="line">    <span class="keyword">case</span> <span class="type">JNum</span>(num) =&gt; num.toString</div><div class="line">    <span class="keyword">case</span> <span class="type">JStr</span>(str) =&gt; <span class="string">"\""</span> + str + <span class="string">"\""</span></div><div class="line">    <span class="keyword">case</span> <span class="type">JBool</span>(b) =&gt; b.toString</div><div class="line">    <span class="keyword">case</span> <span class="type">JNull</span> =&gt; <span class="string">"null"</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h4 id="Function"><a href="#Function" class="headerlink" title="Function"></a>Function</h4><p>有一个地方需要讨论一下，以下<code>pattern matching</code>代码块中返回的类型是什么？<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&#123; <span class="keyword">case</span> (key, value) =&gt; key + ”: ” + value &#125;</div></pre></td></tr></table></figure></p>
+<p>在前面的打印代码中，<code>map</code>函数需要的参数类型是<code>JBinding =&gt; String</code>的函数类型，其中<code>JBinding</code>是<code>String</code>和<code>JSON</code>的<code>pair</code>，也就是<code>type JBinding = (String, JSON)</code>。<br>Scala也是一门面向对象语言，其中所有具体的类型都是一种<code>class</code>或<code>trait</code>。函数类型也不例外，比如说<code>JBinding =&gt; String</code>的类型其实是<code>Function1[JBinding, String]</code>，其中<code>Function1</code>是一个<code>trait</code>，<code>JBinding</code>和<code>String</code>是类型参数。<br>下面是<code>trait Function1</code>的大体表示：<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">trait</span> <span class="title">Function1</span>[-<span class="type">A</span>, +<span class="type">R</span>] </span>&#123;</div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">apply</span></span>(x: <span class="type">A</span>): <span class="type">R</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>其中<code>[-A, +R]</code>表示的是范型中的逆变和协变，以后会在其它文章中介绍。<br>综上，上面的<code>pattern matching</code>代码块其实是一个<code>Function1</code>类型的实例，即：<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">new</span> <span class="type">Function1</span>[<span class="type">JBinding</span>, <span class="type">String</span>] &#123;</div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">apply</span></span>(x: <span class="type">JBinding</span>) = x <span class="keyword">match</span> &#123;</div><div class="line">    <span class="keyword">case</span> (key, value) =&gt; key + ”: ” + show(value)</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>将函数定义成<code>trait</code>的好处是我们可以继承函数类型。<br>例如Scala中的<code>Map</code>类型继承了函数类型，如下：<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">trait</span> <span class="title">Map</span>[<span class="type">Key</span>, <span class="type">Value</span>] <span class="keyword">extends</span> (<span class="params"><span class="type">Key</span> =&gt; <span class="type">Value</span></span>)</span></div></pre></td></tr></table></figure></p>
+<p>就能通过<code>map(key)</code>的形式，也就是函数调用来由key得到value。<br>Scala中的Sequences也是继承了函数类型，如下：<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">trait</span> <span class="title">Seq</span>[<span class="type">Elem</span>] <span class="keyword">extends</span> (<span class="params"><span class="type">Int</span> =&gt; <span class="type">Elem</span></span>)</span></div></pre></td></tr></table></figure></p>
+<p>所以可以通过<code>elems(i)</code>的形式来由序列的下表访问对应的元素。</p>
+<h4 id="Partial-Matches"><a href="#Partial-Matches" class="headerlink" title="Partial Matches"></a>Partial Matches</h4><p>通过上面的知识可以知道，下面的<code>pattern matching</code>代码块，<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&#123; <span class="keyword">case</span> <span class="string">"ping"</span> =&gt; <span class="string">"pong"</span> &#125;</div></pre></td></tr></table></figure></p>
+<p>可以得到一个<code>String =&gt; String</code>的函数类型，即：<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">val</span> f: <span class="type">String</span> =&gt; <span class="type">String</span> = &#123; <span class="keyword">case</span> <span class="string">"ping"</span> =&gt; <span class="string">"pong"</span> &#125;</div></pre></td></tr></table></figure></p>
+<p>但是如果调用<code>f(”pong”)</code>将会返回<code>MatchError</code>的异常，这显而易见。那么问题来了，“Is there a way to find out whether the function can be applied to a given argument before running it?”<br>在Scala中可以这么解决，定义<code>PartialFunction</code>，如下所示：<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">val</span> f: <span class="type">PartialFunction</span>[<span class="type">String</span>, <span class="type">String</span>] = &#123; <span class="keyword">case</span> <span class="string">"ping"</span> =&gt; <span class="string">"pong"</span> &#125;</div><div class="line">f.isDefinedAt(<span class="string">"ping"</span>) <span class="comment">// true</span></div><div class="line">f.isDefinedAt(<span class="string">"pong"</span>) <span class="comment">// false</span></div></pre></td></tr></table></figure></p>
+<p><code>PartialFunction</code>和<code>Function</code>的区别就是<code>PartialFunction</code>定义了<code>isDefinedAt</code>函数。如果我们定义<code>{ case &quot;ping&quot; =&gt; &quot;pong&quot; }</code>是一个<code>PartialFunction</code>类型，那么Scala编译器将会展开为：<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">new</span> <span class="type">PartialFunction</span>[<span class="type">String</span>, <span class="type">String</span>] &#123;</div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">apply</span></span>(x: <span class="type">String</span>) = x <span class="keyword">match</span> &#123;</div><div class="line">  <span class="keyword">case</span> <span class="string">"ping"</span> =&gt; <span class="string">"pong"</span></div><div class="line">  &#125;</div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">isDefinedAt</span></span>(x: <span class="type">String</span>) = x <span class="keyword">match</span> &#123;</div><div class="line">   <span class="keyword">case</span> <span class="string">"ping"</span> =&gt; <span class="literal">true</span></div><div class="line">   <span class="keyword">case</span> _ =&gt; <span class="literal">false</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>这一节中表达JSON数据格式的例子非常有趣，我把完整的代码放在下面，Scala的代码非常简洁。<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">JSON</span> </span>&#123;</div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">show</span></span>: <span class="type">String</span> = <span class="keyword">this</span> <span class="keyword">match</span> &#123;</div><div class="line">    <span class="keyword">case</span> <span class="type">JSeq</span>(elems) =&gt; <span class="string">"["</span> + (elems map (_.show) mkString <span class="string">", "</span>) + <span class="string">"]"</span></div><div class="line">    <span class="keyword">case</span> <span class="type">JObj</span>(bindings) =&gt;</div><div class="line">      <span class="keyword">val</span> assocs = bindings map &#123;</div><div class="line">        <span class="keyword">case</span> (key, value) =&gt; <span class="string">"\""</span> + key + <span class="string">"\": "</span> + value.show</div><div class="line">      &#125;</div><div class="line">      <span class="string">"&#123;"</span> + (assocs mkString <span class="string">", "</span>) + <span class="string">"&#125;"</span></div><div class="line">    <span class="keyword">case</span> <span class="type">JNum</span>(num) =&gt; num.toString</div><div class="line">    <span class="keyword">case</span> <span class="type">JStr</span>(str) =&gt; <span class="string">"\""</span> + str + <span class="string">"\""</span></div><div class="line">    <span class="keyword">case</span> <span class="type">JBool</span>(b) =&gt; b.toString</div><div class="line">    <span class="keyword">case</span> <span class="type">JNull</span> =&gt; <span class="string">"null"</span></div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">case</span> <span class="class"><span class="keyword">class</span> <span class="title">JSeq</span>(<span class="params">elems: <span class="type">List</span>[<span class="type">JSON</span>]</span>) <span class="keyword">extends</span> <span class="title">JSON</span></span></div><div class="line"><span class="keyword">case</span> <span class="class"><span class="keyword">class</span> <span class="title">JObj</span>(<span class="params">bindings: <span class="type">Map</span>[<span class="type">String</span>, <span class="type">JSON</span>]</span>) <span class="keyword">extends</span> <span class="title">JSON</span></span></div><div class="line"><span class="keyword">case</span> <span class="class"><span class="keyword">class</span> <span class="title">JNum</span>(<span class="params">num: <span class="type">Double</span></span>) <span class="keyword">extends</span> <span class="title">JSON</span></span></div><div class="line"><span class="keyword">case</span> <span class="class"><span class="keyword">class</span> <span class="title">JStr</span>(<span class="params">str: <span class="type">String</span></span>) <span class="keyword">extends</span> <span class="title">JSON</span></span></div><div class="line"><span class="keyword">case</span> <span class="class"><span class="keyword">class</span> <span class="title">JBool</span>(<span class="params">b: <span class="type">Boolean</span></span>) <span class="keyword">extends</span> <span class="title">JSON</span></span></div><div class="line"><span class="keyword">case</span> <span class="class"><span class="keyword">object</span> <span class="title">JNull</span> <span class="keyword">extends</span> <span class="title">JSON</span></span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">object</span> <span class="title">Main</span> </span>&#123;</div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">main</span></span>(args: <span class="type">Array</span>[<span class="type">String</span>]) &#123;</div><div class="line">    <span class="keyword">val</span> data = <span class="type">JObj</span>(<span class="type">Map</span>(</div><div class="line">      <span class="string">"firstName"</span> -&gt; <span class="type">JStr</span>(<span class="string">"Yu"</span>),</div><div class="line">      <span class="string">"lastName"</span> -&gt; <span class="type">JStr</span>(<span class="string">"Gong"</span>),</div><div class="line">      <span class="string">"address"</span> -&gt; <span class="type">JObj</span>(<span class="type">Map</span>(</div><div class="line">        <span class="string">"streetAddress"</span> -&gt; <span class="type">JStr</span>(<span class="string">"NY"</span>),</div><div class="line">        <span class="string">"state"</span> -&gt; <span class="type">JStr</span>(<span class="string">"NY"</span>)</div><div class="line">      )),</div><div class="line">      <span class="string">"phoneNumbers"</span> -&gt; <span class="type">JSeq</span>(<span class="type">List</span>(</div><div class="line">        <span class="type">JObj</span>(<span class="type">Map</span>(</div><div class="line">          <span class="string">"type"</span> -&gt; <span class="type">JStr</span>(<span class="string">"home"</span>), <span class="string">"number"</span> -&gt; <span class="type">JStr</span>(<span class="string">"12233"</span>)</div><div class="line">        )),</div><div class="line">        <span class="type">JObj</span>(<span class="type">Map</span>(</div><div class="line">          <span class="string">"type"</span> -&gt; <span class="type">JStr</span>(<span class="string">"fax"</span>), <span class="string">"number"</span> -&gt; <span class="type">JStr</span>(<span class="string">"22222"</span>)</div><div class="line">        ))</div><div class="line">      ))</div><div class="line">    ))</div><div class="line"></div><div class="line">    println(data.show)</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>稍微思考一下，如果用传统的面向对象语言（比如Java）来对JSON数据格式进行抽象，可以如何定义呢？<br>也可以定义基类<code>JSON</code>和子类<code>JSeq JObj JNum JStr JBool JNull</code>，如果要实现打印函数，可能就需要在每个子类中实现自己的打印函数，也就是写六个<code>show</code>函数。<br>如果你有什么想法和思考，欢迎前来讨论。</p>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+				
+    	<li class="prev"><a href="/2015/10/28/permutation/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+  		
+
+        <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+          <li class="next disabled"><a>Next<i class="fa fa-arrow-circle-o-right"></i></a></li>
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+
+    <!-- share -->
+    
+        
+
+        
+    <!-- JiaThis Button BEGIN -->
+    <div class="jiathis_style_24x24">
+        <a class="jiathis_button_weixin"></a>
+        <a class="jiathis_button_tsina"></a>
+        <a class="jiathis_button_twitter"></a>
+        <a class="jiathis_button_fb"></a>
+        <a class="jiathis_button_googleplus"></a>
+        <a class="jiathis_button_linkedin"></a>
+        <a class="jiathis_button_copy"></a>
+        <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+        <a class="jiathis_counter_style"></a>
+    </div>
+    <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+    <!-- JiaThis Button END -->
+    <br>
+
+
+    
+	
+	<!-- comment -->
+	
+<section id="comment">
+  <h2 class="title">Comments</h2>
+
+  
+  	 <div class="ds-thread" data-thread-key="2015/10/27/Functions-and-Pattern-Matching/" data-title="Cousera响应式编程 - Functions and Pattern Matching" data-url="http://pangolulu.github.io/2015/10/27/Functions-and-Pattern-Matching/"></div>  
+  
+</section>
+
+	</div> <!-- col-md-9/col-md-12 -->
+		
+	
+	<div id="side_meta">
+		<div class="col-md-3" id="post_meta"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2015-10-27 
+	</div>
+	
+
+	<!-- categories -->
+    
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#categorys"><i class="fa fa-folder"></i></a>	
+    <ul id="categorys" class="tag_box list-unstyled collapse in">
+          
+  <li>
+    <li><a href="/categories/程序语言/">程序语言<span>1</span></a></li>
+  </li>
+
+    </ul>
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/Scala/">Scala<span>1</span></a></li> <li><a href="/tags/Reactive-Programming/">Reactive Programming<span>1</span></a></li> <li><a href="/tags/Cousera/">Cousera<span>1</span></a></li>
+    </ul>
+	</div>
+		
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	</div>
+		
+
+</div><!-- row -->
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'pangolulu' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2016 pangolulu
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
+</p> </footer>
+</div> <!-- container-narrow -->
+  
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
+
+</body>
+   </html>
