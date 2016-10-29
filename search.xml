@@ -4,6 +4,134 @@
   
     
     <entry>
+      <title><![CDATA[Deep Learning for Information Retrieval]]></title>
+      <url>http://pangolulu.github.io/2016/10/28/deep-ir/</url>
+      <content type="html"><![CDATA[<p>最近关注了一些Deep Learning在Information Retrieval领域的应用，得益于Deep Model在对文本的表达上展现的优势（比如RNN和CNN），我相信在IR的领域引入Deep Model也会取得很好的效果。<br>IR的范围可能会很广，比如传统的Search Engine，Recommendation System或者Question Answering（retrieval based）可能都可以属于IR的范畴。仔细考虑这些应用，不难看出他们都存在一个模式，也就是几个基本需要解决的任务：</p>
+<ol>
+<li>Query（Intent）的表达和Document（Content）的表达？</li>
+<li>Matching Model：maps query-document pairs to a feature vector representation where each component reflects a certain type of similarity, e.g., lexical, syntactic, and semantic。<br>或者这里根据matching vector与参数w直接得到matching score，相当于做了内积。</li>
+<li>Ranking Model：接受q-d的matching结果（matching vector或matching score），在当前end-to-end的训练框架下，其实使用matching score更方便一点（为什么更方便一点本文后面会说明），然后使用learning to rank的方法（pointwise，pairwise或listwise）来进行训练，重点是如何设计loss function。</li>
+</ol>
+<p>下面我主要参考Li Hang在sigir 2016上的tutorial（<a href="http://t.cn/Rt7OK2w" target="_blank" rel="external">http://t.cn/Rt7OK2w</a>）来组织我的笔记，同时会重点阅读几篇有代表性的论文来更好的理解细节。一句话，希望学习可以既见森林，又可见树木。<br>我主要从以下四个部分来讲解：</p>
+<ol>
+<li>IR的基础</li>
+<li>相关的Deep Learning模型（Word Embedding，RNN和CNN）</li>
+<li>Deep Learning for IR的基础性问题</li>
+<li>Deep Learning for IR的具体应用</li>
+</ol>
+<h2 id="IR的基础"><a href="#IR的基础" class="headerlink" title="IR的基础"></a>IR的基础</h2><p>下图展现了Information Retrieval的一个整体构架，</p>
+<p><img src="/assets/img/dl-ir/Overview_of_Information_Retrieval.png" alt="IR"></p>
+<p>传统的IR使用向量空间模型（VSM）来计算query和document的相似度，具体方法如下：</p>
+<ul>
+<li>Representing query and document as tf-idf (or BM25) vectors</li>
+<li>Calculating cosine similarity between them</li>
+</ul>
+<p><img src="/assets/img/dl-ir/Approach_in_Traditional_IR.png" alt="IR"></p>
+<p>现代的IR使用了一个更加general的框架来处理similarity的问题：</p>
+<ul>
+<li>Conducting query and document understanding</li>
+<li>Representing query and document as feature vectors</li>
+<li>Calculating multiple matching scores between query and document (Matching Model)</li>
+<li>Training ranker with matching scores as features using learning to rank (Ranking Model)</li>
+</ul>
+<p><img src="/assets/img/dl-ir/Approach_in_Modern_IR.png" alt="IR"></p>
+<p>一般这四个步骤都是在一个end-to-end的神经网络结构下进行训练的。这里注意，Matching Model只有唯一一个，Ranking Model只使用这唯一一个Matching Model。</p>
+<p>Deep Learning的方法可以渗透在IR中的不同步骤中，如下图所示，一般包括了Intent和Content的表示和Matching Model的学习。</p>
+<p><img src="/assets/img/dl-ir/Deep_Learning_and_IR.png" alt="IR"></p>
+<p>注意，这里并没有说明Ranking Model，其实Ranking Model可以看做整个神经网络结构的loss function层，不同的learning to rank方法有不同的loss形式，本文只讨论pointwise和pairwise方法，因为这两种方法效率足够高，在实践中应用的最多。</p>
+<p>同时，本文重点考察两种工业中应用最多的训练数据形式。</p>
+<ol>
+<li>第一种形式，数据提供了某个query对应的完全的document的排序（或relevance值）；</li>
+<li>第二种形式，数据只提供了某个query对应的一个或几个相关document，其他document并不知道相关性，具体类似推荐系统的数据。<br>其实，在工业环境中第二种数据形式是最普遍的，由于本身只有正样本，所以需要进行随机负采样，来构造一种排序关系。同时loss function也可以使用pointwise或pairwise的方法，<br>pointwise方法直接把问题当做二分类问题来做；pairwise使用了正样本和每个负样本的偏序关系，可以使用RankSVM的形式（hinge loss）或RankNet的形式（cross entropy loss）。</li>
+</ol>
+<h2 id="相关Deep-Learning模型的基础"><a href="#相关Deep-Learning模型的基础" class="headerlink" title="相关Deep Learning模型的基础"></a>相关Deep Learning模型的基础</h2><h3 id="Word-Embedding"><a href="#Word-Embedding" class="headerlink" title="Word Embedding"></a>Word Embedding</h3><h3 id="RNN"><a href="#RNN" class="headerlink" title="RNN"></a>RNN</h3><h3 id="CNN"><a href="#CNN" class="headerlink" title="CNN"></a>CNN</h3><h2 id="Deep-Learning-for-IR的基础性问题"><a href="#Deep-Learning-for-IR的基础性问题" class="headerlink" title="Deep Learning for IR的基础性问题"></a>Deep Learning for IR的基础性问题</h2><h3 id="Representation-Learning"><a href="#Representation-Learning" class="headerlink" title="Representation Learning"></a>Representation Learning</h3><p>Word Embedding的出现使得我们可以使用低维的向量空间来表示Word的语义，避免了使用one-hot表示产生了一些问题，比如维度高、one-hot词向量间无法表达相关性等等。这种embedding的方法称为hierarchy representation。<br>那么，如何将一段文本表示成embedding的形式呢？也就是sentence representation或document representation，目的是represent syntax, semantics, and even pragmatics of sentences。<br>目前有很多研究工作可以应用，对于sentence的表示可以使用rnn或cnn，对于document的表示会复杂一点，可以参考<code>Hierarchical Attention Networks for Document Classification</code>和<code>Convolutional Neural Network Architectures for Matching Natural Language Sentences</code>这两篇工作。<br>它们主要的思想其实就是使用cnn或rnn来表示document中的sentences，然后使用表示好的sentence vectors作为另外的rnn的输入来最终表示整个document。</p>
+<p>一般CNN或RNN会随着整个网络进行end-to-end的训练，也就是Task-dependent的，也是有监督的。</p>
+<p>Representation Learning是整个IR或NLP task的基础，无论是Classification的问题，Matching的问题，还是Translation的问题，都需要先学习一个document或sentence的中间表示。<br>可以看下面的示意图，表示IR或NLP不同任务之间的关系，和representation learning所处的位置。</p>
+<p><img src="/assets/img/dl-ir/representation_learning.png" alt="IR"></p>
+<h3 id="Matching-Model"><a href="#Matching-Model" class="headerlink" title="Matching Model"></a>Matching Model</h3><p>Matching是IR任务中重要的一步，意义是maps query-document pairs to a feature vector representation where each component reflects a certain type of similarity, e.g., lexical, syntactic, and semantic。<br>这里产生的是一个matching vector，接下来可以根据matching vector与参数w直接得到matching score（比如做内积）。</p>
+<p><img src="/assets/img/dl-ir/matching_model.png" alt="IR"></p>
+<p>Maching Model产生的结果（matching vector或matching score）接下来会作为ranking model的输入，ranking model其实相当于整个网络的loss function，在当前end-to-end的训练框架下，其实使用matching score更方便一点。<br>之后可以看到，使用<code>matching vector + LTR</code>的方法和使用<code>maching score + ranking loss</code>的方法一定程度上是等价的（这里只考虑pointwise和pairwise方法），<br>而且后面一种形式更加general，它包含了传统的LTR的表达，也可以做一些变化，比如做一些negative sampling等等。之后在Ranking Model的讲解会重点介绍几篇论文中常见的ranking loss的形式，并且说明一下LTR方法使用matching vector和使用matching score的等价性。</p>
+<p>好，现在我们重点讲解使用深度学习来做Matching的方法。一般Matching的方法有三种形式：</p>
+<ol>
+<li>Projection to Latent Space</li>
+<li>One Dimensional Matching</li>
+<li>Two Dimensional Matching</li>
+<li>Tree Matching</li>
+</ol>
+<p>本文暂时只讨论前三种。</p>
+<h4 id="Matching-Projection-to-Latent-Space"><a href="#Matching-Projection-to-Latent-Space" class="headerlink" title="Matching: Projection to Latent Space"></a>Matching: Projection to Latent Space</h4><p>类似于VSM的方法</p>
+<p><img src="/assets/img/dl-ir/Projection_to_Latent_Space.png" alt="IR"></p>
+<h4 id="Matching-One-Dimensional-Matching"><a href="#Matching-One-Dimensional-Matching" class="headerlink" title="Matching: One Dimensional Matching"></a>Matching: One Dimensional Matching</h4><p>应用的比较多，可以在这个基础上融合不同的matching方法得到的结果，比如融入了第一种matching方法（query和document的vector做内积）。</p>
+<p><img src="/assets/img/dl-ir/One_Dimensional_Matching.png" alt="IR"></p>
+<h4 id="Matching-Two-Dimensional-Matching"><a href="#Matching-Two-Dimensional-Matching" class="headerlink" title="Matching: Two Dimensional Matching"></a>Matching: Two Dimensional Matching</h4><p>直接生成二维的matching score，然后用cnn模型进行学习。</p>
+<p><img src="/assets/img/dl-ir/Two_Dimensional_Matching.png" alt="IR"></p>
+<p>有一些研究的结论，如下：</p>
+<ul>
+<li>对于sentence的表示学习，cnn方法要比rnn方法好，这个有待于验证。</li>
+<li>2-dimensional CNN比1-dimensional CNN方法好</li>
+<li>Matching scores can be used as features of learning to rank models，这个方法相当于可以融合不同方法得到的matching score，然后组成一个matching vector。</li>
+</ul>
+<h3 id="Ranking-Model"><a href="#Ranking-Model" class="headerlink" title="Ranking Model"></a>Ranking Model</h3><p>也就是大家熟知的Learning to Rank，不过我这里想解释的更加general一点，可能在构造训练集上和LTR有一些不同。</p>
+<p>先说一下问题的定义，假设我有query <code>q</code>和候选的document集合<code>D={d1, d2, ..., dn}</code>。对于训练集，首先必须再次强调一下训练数据的形式：</p>
+<ol>
+<li>第一种形式，数据提供了某个query对应的完全的document的排序（或relevance值）；</li>
+<li>第二种形式，数据只提供了某个query对应的一个或几个相关document，其他document并不知道相关性，具体类似推荐系统的数据。</li>
+</ol>
+<p>然后说一下LTR的输入，LTR接受Matching Model得到的结果，即可以使Matching Vector或者是Matching Score。</p>
+<p>对于第一种形式的数据，可以采用传统的LTR方法：</p>
+<ul>
+<li>pointwise方法直接当做回归问题，可以看到Matching Score就可以看做是回归的值了，如果使用Matching Vector作为输入，相当于继续使用一些参数W做了一次回归问题。<br>但其实这是可以通过神经网络end-to-end学习出来的，相当于整个网络（包括Representation Learning和Matching Model）的目标函数就是回归问题（损失函数为最小二乘）。</li>
+<li>pairwise方法考虑了document集合中两两document的偏序关系，由此构造训练集。考虑所有两两的document，比如<code>d1</code>和<code>d2</code>，如果训练集中<code>d1 &gt; d2</code>，那么我们希望通过Matching Model得到的<code>d1</code>和<code>d2</code>对应的Matching Score <code>m1</code>要大于<code>m2</code>。<br>在上面的intuition的指导下，我们可以定义不同的loss function了，最常见就是hinge loss function，也就是我们希望<code>m1</code>比<code>m2</code>要至少大于一个值，对应了SVM中的1，具体可以写成<code>max(0, theta - m1 + m2)</code>。<br>这个Hinge Loss的定义方法其实就是RankSVM的方法，不过传统的RankSVM的定义使用了Matching Vector作为输入，比如<code>v1</code>和<code>v2</code>，并且重新构造了训练集，<code>v1 - v2</code>对应的label为<code>+1</code>（正类），<code>v2 - v1</code>对应的label为<code>-1</code>（负类）。<br>大家可以看一下RankSVM的公式形式，不难会发现RankSVM和我这里表达的定义其实是等价的，感兴趣的同学可以参考<a href="http://www.cnblogs.com/kemaswill/p/3241963.html" target="_blank" rel="external">http://www.cnblogs.com/kemaswill/p/3241963.html</a>。其实，对于RankNet也是相同的道理，感兴趣的可以参考<a href="http://www.cnblogs.com/kemaswill/p/kemaswill.html" target="_blank" rel="external">http://www.cnblogs.com/kemaswill/p/kemaswill.html</a>。</li>
+</ul>
+<p>对于第二种形式的数据，训练数据中只提供了某个query对应的一个或几个相关document，其他document并不知道相关性。由于只提供了正反馈的数据，目前主流的做法就是进行contrastive sampling，也就是随机负采样。<br>当有了负样本之后，相当于可以得到document之间的偏序关系了，就可以使用LTR的方法，这里面我倾向于称为ranking loss，也包括了pointwise和pairwise这两种方法：</p>
+<ul>
+<li>pointwise方法直接把问题当做二分类来做，正相关的document为正例，采样的负相关的数据为负例。如果接收Matching Score，可以在外面套一层sigmoid函数转化成概率，使用交叉熵损失函数进行训练；如果接收Matching Vector，相当可以再做一次logistics regression，但其实和前面方法是等价的。</li>
+<li>pairwise方法是目前主流的做法，对一个query来说正相关的document偏序关系要大于这个query下随机采样的负相关的document，采样的个数可以作为一个超参数。这样可以使用和第一种数据形式的pairwise方法设计ranking loss了，这里不再赘述。<br>一般文献里面都会使用hinge loss，表达示为<code>e(x, y_pos, y_neg) = max(0, theta - s_match(x, y_pos) + s_match(x, y_neg))</code>，其中<code>x</code>为query，<code>y_pos</code>为正相关document，<code>y_neg</code>为负相关document，<code>s_match</code>为Matching Model得到的Matching Score。</li>
+</ul>
+<h2 id="Deep-Learning-for-IR的具体应用"><a href="#Deep-Learning-for-IR的具体应用" class="headerlink" title="Deep Learning for IR的具体应用"></a>Deep Learning for IR的具体应用</h2><h3 id="Document-Retrieval"><a href="#Document-Retrieval" class="headerlink" title="Document Retrieval"></a>Document Retrieval</h3><p>这里考虑Learning to Rank for Document Retrieval，下图是整体的构架图，可以看到系统直接返回Ranking Model，相当于Matching Model和Ranking Model以一起学出来的。</p>
+<p><img src="/assets/img/dl-ir/Document_Retrieval.png" alt="IR"></p>
+<p>具体有一下几点考虑：</p>
+<ul>
+<li>simultaneously learn matching model and ranking model</li>
+<li>Matching model: Projection into Latent Space, Using CNN</li>
+<li>Ranking model: taking matching model output as features, as well as other features, Using DNN</li>
+</ul>
+<p>比较重要的就是Matching Model和Ranking Model的关系，下图直观的表示出来：</p>
+<p><img src="/assets/img/dl-ir/Relation_between_Matching_Model_and_Ranking_Model.png" alt="IR"></p>
+<p>其实，在我看来图中最后都会输出一个score，这个score就是matching score，而这个是最重要的。</p>
+<p>下面给出一篇论文的网络结构图，这篇论文发表在sigir 2015，叫做”Learning to Rank Short Text Pairs with Convolutional Deep Neural Networks”，有兴趣的同学可以回去精读。</p>
+<p><img src="/assets/img/dl-ir/sigir_2015.png" alt="IR"></p>
+<p>首先，这篇论文使用了pointwise的方法，所以是一个二分类问题；使用CNN来对query和document学习representation；使用一个双线性函数来match query-vector和document-vector（<code>q_vec M d_vec</code>的内积）；<br>之后与query-vector和document-vector或者加上其他feature一同连接成一个feature vector，这个就是Matching Vector；网络后几层经过若干fully connected层，最后会得到一个实数，就是Matching Score；<br>由于是一个二分类问题，Matching Score外面套一层sigmoid函数转换成概率，使用交叉熵损失函数进行训练。</p>
+<h3 id="Retrieval-based-Question-Answering"><a href="#Retrieval-based-Question-Answering" class="headerlink" title="Retrieval based Question Answering"></a>Retrieval based Question Answering</h3><p>Retrieval based QA其实和Document Retrieval没有什么区别，下图给出了一个整体的框架图：</p>
+<p><img src="/assets/img/dl-ir/Retrieval_based_QA_System.png" alt="IR"></p>
+<p>具体的一篇论文可以参考李航发表在nips 2015的文章，题目叫”Convolutional Neural Network Architectures for Matching Natural Language Sentences”。<br>文中也是用了CNN来学习sentence的表示，但文中提出了两种Matching Model结构，一种是One Dimensional Matching，另一种是Two Dimensional Matching。分别表示如下图所示：</p>
+<p><img src="/assets/img/dl-ir/NIPS_One_Dimensional_Matching.png" alt="IR"><br><img src="/assets/img/dl-ir/NIPS_Two_Dimensional_Matching.png" alt="IR"></p>
+<p>最后Matching Model会生成一个Matching Score，正如我在这篇博文阐述的一样。</p>
+<p>对于Ranking Model，也就是ranking loss，这篇文章使用了pairwise的方式，使用了hinge loss function，具体为：<code>e(x, y+, y−) = max(0, 1 + s(x, y−) − s(x, y+))</code>。<br>其中，<code>y+</code>比<code>y-</code> match <code>x</code>的分数要高，也就是<code>y+</code>排在<code>y-</code>之前；<code>s(x, y)</code>是<code>x</code>和<code>y</code>的matching score。</p>
+<h3 id="Image-Retrieval"><a href="#Image-Retrieval" class="headerlink" title="Image Retrieval"></a>Image Retrieval</h3><p>这个任务的意义是用文字来搜索图，反过来或者用图来搜索文字。一个整体的示意图如下：</p>
+<p><img src="/assets/img/dl-ir/Image_Retrieval.png" alt="IR"></p>
+<p>具体的一篇论文也是来自李航老师的，发表在ICCV 2016，题目叫作”Multimodal Convolutional Neural Networks for Matching Image and Sentence”。<br>这篇论文使用了Multimodal CNN的方法，具体为：</p>
+<ul>
+<li>Represent text and image as vectors and then match the two vectors</li>
+<li>三种matching方法：Word-level matching, phrase-level matching, sentence-level matching</li>
+<li>CNN model works better than RNN models (state of the art) for text</li>
+</ul>
+<p>其中sentence-level matching和Word-level matching的示意图如下：</p>
+<p><img src="/assets/img/dl-ir/Sentence_level_Matching.png" alt="IR"><br><img src="/assets/img/dl-ir/Word_level_Matching_Model.png" alt="IR"></p>
+<p>最后网络会输出一个Matching Score，这篇文章也使用了pairwise方法，但是训练数据没有负相关样本，所以使用了随机负采样的方法；<br>loss function选择了hinge loss，具体形式为<code>eθ(xn, yn, ym) = max(0, theta − s_match(xn, yn) + s_match(xn, ym)</code>，其中<code>ym</code>是随机采样的负样本。</p>
+<p>总结一下，可以看到，无论是Document Retrieval，Retrieval based Question Answering还是Image Retrieval，它们的模式都已一样的，都包括了三个基本要素：Representation Learning，Matching Model和Ranking Model。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本文在于帮助梳理一下这种retrieve，match，similarity或者说recommend等一类问题的一些模式和关键要素，使点连成线，在大脑中构建真正的理解，能做到举一反三，遇到相似的任务能很自然的联想过去。<br>大家如果有什么意见或想法，欢迎在下面留言。</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li>Convolutional Neural Network Architectures for Matching Natural Language Sentences, nips 2015</li>
+<li>Learning to Rank Short Text Pairs with Convolutional Deep Neural Networks, sigir 2015</li>
+<li>Multimodal Convolutional Neural Networks for Matching Image and Sentence, iccv 2016</li>
+<li>TOWARDS UNIVERSAL PARAPHRASTIC SENTENCE, ICLR 2016</li>
+<li>deep_learning_for_information_retrieval, sigir 2016 tutorial</li>
+</ul>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[Huffman Tree (use priority queue) in C++]]></title>
       <url>http://pangolulu.github.io/2016/01/09/Huffman-Tree-use-priority-queue-in-C/</url>
       <content type="html"><![CDATA[<p>Use the priority queue to implement Huffman Tree, written in C++ and use STL.</p>

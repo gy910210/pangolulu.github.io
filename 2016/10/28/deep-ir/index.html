@@ -3,13 +3,15 @@
 <head>
   <meta charset="utf-8">
   
-  <title>pangolulu的博客</title>
+  <title>Deep Learning for Information Retrieval | pangolulu的博客</title>
   <meta name="author" content="pangolulu">
+  
+  <meta name="description" content="最近关注了一些Deep Learning在Information Retrieval领域的应用，得益于Deep Model在对文本的表达上展现的优势（比如RNN和CNN），我相信在IR的领域引入Deep Model也会取得很好的效果。IR的范围可能会很广，比如传统的Search Engine，Rec">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  
+  <meta property="og:title" content="Deep Learning for Information Retrieval"/>
   <meta property="og:site_name" content="pangolulu的博客"/>
 
   
@@ -84,54 +86,32 @@
 
   <div class="container">
   	<div class="content">
-    	 <div class="page-header page-header-inverse ">
-  <h1 class="title title-inverse ">pangolulu的博客</h1>
-</div>
+    	 
 
-<div class="row page">
 
 	
+		<div class="page-header page-header-inverse ">		
+			<h1 class="title title-inverse "> Deep Learning for Information Retrieval</h1>
+		</div>		
+	
+
+
+
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div id="top_meta"></div>
 	<div class="col-md-9">
 	
 
-		<div class="slogan">
-      <i class="fa fa-heart"></i>
-      Can machine learning learns?
-</div>    
-		<div id="top_search"></div>
-		<div class="mypage">
-		
-		<!-- title and entry -->
-        <!-- render top articles firstly -->
-        
-		
-            
-		
-            
-		
-            
-		
-            
-		
-        
-        <!-- render other articles -->
-        
-           
-			  
-	
-	<!-- display as entry -->	
-		<h3 class="title">
-			<div class="date"> 2016-10-28 </div>
-			<div class="article-title"><a href="/2016/10/28/deep-ir/" >Deep Learning for Information Retrieval</a></div>						
-		</h3>
-	
+	<!-- content -->
+	<div class="mypage">		
+	  		
 
-
-			  <div class="entry">
-  <div class="row">
-	
-	
-		<p>最近关注了一些Deep Learning在Information Retrieval领域的应用，得益于Deep Model在对文本的表达上展现的优势（比如RNN和CNN），我相信在IR的领域引入Deep Model也会取得很好的效果。<br>IR的范围可能会很广，比如传统的Search Engine，Recommendation System或者Question Answering（retrieval based）可能都可以属于IR的范畴。仔细考虑这些应用，不难看出他们都存在一个模式，也就是几个基本需要解决的任务：</p>
+	  <p>最近关注了一些Deep Learning在Information Retrieval领域的应用，得益于Deep Model在对文本的表达上展现的优势（比如RNN和CNN），我相信在IR的领域引入Deep Model也会取得很好的效果。<br>IR的范围可能会很广，比如传统的Search Engine，Recommendation System或者Question Answering（retrieval based）可能都可以属于IR的范畴。仔细考虑这些应用，不难看出他们都存在一个模式，也就是几个基本需要解决的任务：</p>
 <ol>
 <li>Query（Intent）的表达和Document（Content）的表达？</li>
 <li>Matching Model：maps query-document pairs to a feature vector representation where each component reflects a certain type of similarity, e.g., lexical, syntactic, and semantic。<br>或者这里根据matching vector与参数w直接得到matching score，相当于做了内积。</li>
@@ -253,208 +233,129 @@
 <li>TOWARDS UNIVERSAL PARAPHRASTIC SENTENCE, ICLR 2016</li>
 <li>deep_learning_for_information_retrieval, sigir 2016 tutorial</li>
 </ul>
-
-	
+	  
 	</div>
-</div>
 
-           
-		
-           
-			  
-	
-	<!-- display as entry -->	
-		<h3 class="title">
-			<div class="date"> 2016-01-09 </div>
-			<div class="article-title"><a href="/2016/01/09/Huffman-Tree-use-priority-queue-in-C/" >Huffman Tree (use priority queue) in C++</a></div>						
-		</h3>
-	
-
-
-			  <div class="entry">
-  <div class="row">
-	
-	
-		<p>Use the priority queue to implement Huffman Tree, written in C++ and use STL.</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;queue&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="keyword">struct</span> Node</div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> val;</div><div class="line">    <span class="keyword">struct</span> Node * left;</div><div class="line">    <span class="keyword">struct</span> Node * right;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> Node * p_Node;</div><div class="line"></div><div class="line"><span class="keyword">struct</span> cmp</div><div class="line">&#123;</div><div class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">operator</span> <span class="params">()</span> <span class="params">(p_Node <span class="keyword">const</span> &amp;p1, p_Node <span class="keyword">const</span> &amp;p2)</span></span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">return</span> p1-&gt;val &gt; p2-&gt;val;</div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="function">p_Node <span class="title">createNode</span><span class="params">(<span class="keyword">int</span> val, p_Node left, p_Node right)</span></span></div><div class="line">&#123;</div><div class="line">    p_Node node = (p_Node)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">struct</span> Node));</div><div class="line">    node-&gt;val = val;</div><div class="line">    node-&gt;left = left;</div><div class="line">    node-&gt;right = right;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> node;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function">p_Node <span class="title">buildTree</span><span class="params">(<span class="keyword">int</span> * vec, <span class="keyword">int</span> n)</span></span></div><div class="line">&#123;</div><div class="line">    priority_queue&lt;p_Node, <span class="built_in">vector</span>&lt;p_Node&gt;, cmp&gt; forest;</div><div class="line"></div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++)</div><div class="line">    &#123;</div><div class="line">        p_Node node = createNode(vec[i], <span class="literal">NULL</span>, <span class="literal">NULL</span>);</div><div class="line">        forest.push(node);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">while</span>(forest.size() &gt; <span class="number">1</span>)</div><div class="line">    &#123;</div><div class="line">        p_Node node1 =  forest.top();</div><div class="line">        forest.pop();</div><div class="line">        p_Node node2 =  forest.top();</div><div class="line">        forest.pop();</div><div class="line">        <span class="built_in">cout</span>&lt;&lt;node1-&gt;val&lt;&lt;<span class="string">"  "</span>&lt;&lt;node2-&gt;val&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">        p_Node new_node = createNode(node1-&gt;val + node2-&gt;val, node1, node2);</div><div class="line">        forest.push(new_node);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> forest.top();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-	
-	</div>
-</div>
-
-           
-		
-           
-			  
-	
-	<!-- display as entry -->	
-		<h3 class="title">
-			<div class="date"> 2016-01-09 </div>
-			<div class="article-title"><a href="/2016/01/09/Trie-in-C/" >Trie (in C)</a></div>						
-		</h3>
-	
-
-
-			  <div class="entry">
-  <div class="row">
-	
-	
-		<p>Trie树的解释参见：<br><a href="http://blog.csdn.net/hguisu/article/details/8131559" target="_blank" rel="external">http://blog.csdn.net/hguisu/article/details/8131559</a></p>
-<p>下面是用C实现的代码</p>
-<p>头文件：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> TRIE_H</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> TRIE_H</span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> TRIE_SIZE_DEF 128</span></div><div class="line"><span class="keyword">const</span> <span class="keyword">int</span> TRIE_SIZE = TRIE_SIZE_DEF;</div><div class="line"></div><div class="line"><span class="keyword">union</span> NODE_TYPE</div><div class="line">&#123;</div><div class="line">    COMPLETED;</div><div class="line">    UNCOMPLETED;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> Node_</div><div class="line">&#123;</div><div class="line">    <span class="keyword">union</span> NODE_TYPE type;</div><div class="line">    <span class="keyword">char</span> ch;</div><div class="line">    <span class="keyword">struct</span> Node_ *child[TRIE_SIZE];</div><div class="line">&#125;<span class="keyword">trie_t</span>;</div><div class="line"></div><div class="line"><span class="keyword">trie_t</span> * trie_init(<span class="keyword">void</span>);</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">trie_add</span><span class="params">(<span class="keyword">trie_t</span> *trie, <span class="keyword">char</span> *word)</span></span>;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">trie_delete</span><span class="params">(<span class="keyword">trie_t</span> *trie, <span class="keyword">char</span> *word)</span></span>;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">trie_exists</span><span class="params">(<span class="keyword">trie_t</span> *trie, <span class="keyword">char</span> *word)</span></span>;</div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">endif</span> <span class="comment">// TRIE_H</span></span></div></pre></td></tr></table></figure>
-<p>源文件：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div></pre></td><td class="code"><pre><div class="line">#include &lt;stdio.h&gt;</div><div class="line">#include &lt;stdlib.h&gt;</div><div class="line"></div><div class="line">#include "trie.h"</div><div class="line"></div><div class="line">static trie_t * createNewNode(char ch)</div><div class="line">&#123;</div><div class="line">    trie_t *newNode = (trie_t *) malloc(sizeof(trie_t));</div><div class="line">    newNode-&gt;ch = ch;</div><div class="line">    newNode-&gt;type = UNCOMPLETED;</div><div class="line">    int i;</div><div class="line">    for (i = 0; i &lt; TRIE_SIZE; i++)</div><div class="line">    &#123;</div><div class="line">        newNode-&gt;child[i] = NULL;</div><div class="line">    &#125;</div><div class="line">    return newNode;</div><div class="line">&#125;</div><div class="line"></div><div class="line">static int char2int(char ch)</div><div class="line">&#123;</div><div class="line">    return ch - 'a';</div><div class="line">&#125;</div><div class="line"></div><div class="line">trie_t * trie_init(void)</div><div class="line">&#123;</div><div class="line">    return createNewNode('');</div><div class="line">&#125;</div><div class="line"></div><div class="line">void trie_add(trie_t *trie, char *word)</div><div class="line">&#123;</div><div class="line">    char ch;</div><div class="line">    while ((ch = *word++) != '\0')</div><div class="line">    &#123;</div><div class="line">        if (trie-&gt;child[char2int(ch)] == NULL)</div><div class="line">            trie-&gt;child[char2int(ch)] = createNewNode(ch);</div><div class="line">        trie = trie-&gt;child[char2int(ch)];</div><div class="line">    &#125;</div><div class="line">    trie-&gt;type =COMPLETED;</div><div class="line">&#125;</div><div class="line"></div><div class="line">void trie_delete(trie_t *trie, char *word)</div><div class="line">&#123;</div><div class="line">    char ch;</div><div class="line">    while ((ch = *word++) != '\0')</div><div class="line">    &#123;</div><div class="line">        if (trie-&gt;child[char2int(ch)] == NULL)</div><div class="line">            return;</div><div class="line">        trie = trie-&gt;child[char2int(ch)];</div><div class="line">    &#125;</div><div class="line">    trie-&gt;type = UNCOMPLETED;</div><div class="line">&#125;</div><div class="line"></div><div class="line">int trie_exists(trie_t *trie, char *word)</div><div class="line">&#123;</div><div class="line">    char ch;</div><div class="line">    while ((ch = *word++) != '\0')</div><div class="line">    &#123;</div><div class="line">        if (trie-&gt;child[char2int(ch)] == NULL)</div><div class="line">            return 0;</div><div class="line">        trie = trie-&gt;child[char2int(ch)];</div><div class="line">    &#125;</div><div class="line">    return (trie-&gt;tpye == COMPLETED) ? 1 : 0;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-	
-	</div>
-</div>
-
-           
-		
-           
-			  
-	
-	<!-- display as entry -->	
-		<h3 class="title">
-			<div class="date"> 2015-10-28 </div>
-			<div class="article-title"><a href="/2015/10/28/permutation/" >生成全排列算法（Scala和C++实现）</a></div>						
-		</h3>
-	
-
-
-			  <div class="entry">
-  <div class="row">
-	
-	
-		<p>全排列问题描述为：给定一串数字，生成所有可能的排列。<br>本文给出两类，一种使用C++通过回溯算法，一种使用Scala通过递归来求解。</p>
-<p>首先介绍使用Scala通过递归求解的方法，定义递归关系：对<code>S</code>中的每个<code>x</code>，递归的生成<code>S-x</code>的所有排列的序列，而后将<code>x</code>加到每个序列的前面。这样就能对<code>S</code>里的每个<code>x</code>，产生出了<code>S</code>的所有以<code>x</code>开头的排列。合起来就是所有的排列了。<br>实现的代码如下：<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">permutation</span></span>(xs: <span class="type">List</span>[<span class="type">Int</span>]): <span class="type">Set</span>[<span class="type">List</span>[<span class="type">Int</span>]] =</div><div class="line">  <span class="keyword">if</span> (xs == <span class="type">Nil</span>) <span class="type">Set</span>(<span class="type">Nil</span>)</div><div class="line">  <span class="keyword">else</span> &#123;</div><div class="line">    <span class="keyword">for</span> &#123;</div><div class="line">      i &lt;- xs.indices</div><div class="line">      ys &lt;- func(xs filter (_ != xs(i)))</div><div class="line">    &#125;   <span class="keyword">yield</span> xs(i) :: ys</div><div class="line">  &#125;.toSet</div><div class="line"></div><div class="line">func(<span class="type">List</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>))</div></pre></td></tr></table></figure></p>
-<p>使用回溯法的代码如下：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">permutation</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; vec, <span class="keyword">int</span> s)</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span> (s == vec.size()) &#123;</div><div class="line">        for_each(vec.begin(), vec.end(), [](<span class="keyword">int</span> v) &#123; <span class="built_in">cout</span> &lt;&lt; v &lt;&lt; <span class="string">" "</span>; &#125;);</div><div class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = s; i &lt; vec.size(); i++) &#123;</div><div class="line">        swap(vec[s], vec[i]);</div><div class="line">        func(vec, s+<span class="number">1</span>);</div><div class="line">        swap(vec[s], vec[i]);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>其中，函数参数<code>s</code>表示的是当前序列已经有多少位完成了排列，即前<code>s</code>位完成了排列，当前正在对第<code>s</code>位进行排列。取所有<code>s</code>到<code>size - 1</code>位置的元素作为第<code>s</code>位的数字。回溯的意义是在执行完递归<code>func(vec, s+1);</code>后，需要将之前交换过的元素交换回来，即需要将数组回复原状。</p>
-<p>综上，觉得使用Scala的递归思想考虑还是比较简单的，但效率不敢恭维。</p>
-
-	
-	</div>
-</div>
-
-           
-		
-
-		</div>
-
-		<!-- pagination -->
-		<div>
-  		<center>
-		<div class="pagination">
+	<div>
+  	<center>
+	<div class="pagination">
 <ul class="pagination">
 	 
+		
+          <li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+        
+
+        <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/2016/01/09/Huffman-Tree-use-priority-queue-in-C/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
 </ul>
 </div>
 
-  		</center>
-		</div>
-
-		
-		
-	</div> <!-- col-md-9 -->
-
-	
-		<div class="col-md-3">
-	<div id="sidebar">
-	
-			
-  <div id="site_search">
-   <div class="form-group">
-    <input type="text" id="local-search-input" name="q" results="0" placeholder="Search" class="st-search-input st-default-search-input form-control"/>
-   </div>  
-  <div id="local-search-result"></div>
-  </div>
-
-
-		
-			
-	<div class="widget">
-		<h4>Categories</h4>
-		<ul class="tag_box inline list-unstyled">
-		
-			<li><a href="/categories/Information-Retrieval/">Information Retrieval<span>1</span></a></li>
-		
-			<li><a href="/categories/算法与数据结构/">算法与数据结构<span>3</span></a></li>
-		
-		</ul>
+    </center>
 	</div>
 
+    <!-- share -->
+    
+        
+
+        
+    <!-- JiaThis Button BEGIN -->
+    <div class="jiathis_style_24x24">
+        <a class="jiathis_button_weixin"></a>
+        <a class="jiathis_button_tsina"></a>
+        <a class="jiathis_button_twitter"></a>
+        <a class="jiathis_button_fb"></a>
+        <a class="jiathis_button_googleplus"></a>
+        <a class="jiathis_button_linkedin"></a>
+        <a class="jiathis_button_copy"></a>
+        <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+        <a class="jiathis_counter_style"></a>
+    </div>
+    <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+    <!-- JiaThis Button END -->
+    <br>
+
+
+    
+	
+	<!-- comment -->
+	
+<section id="comment">
+  <h2 class="title">Comments</h2>
+
+  
+  	 <div class="ds-thread" data-thread-key="2016/10/28/deep-ir/" data-title="Deep Learning for Information Retrieval" data-url="http://pangolulu.github.io/2016/10/28/deep-ir/"></div>  
+  
+</section>
+
+	</div> <!-- col-md-9/col-md-12 -->
 		
-			
-	<div class="widget">
-		<h4>Tag Cloud</h4>
-		<ul class="tag_box inline list-unstyled">		
-		
-			<li><a href="/tags/Huffman-Tree/">Huffman Tree<span>1</span></a></li>
-		
-			<li><a href="/tags/Deep-Learning/">Deep Learning<span>1</span></a></li>
-		
-			<li><a href="/tags/Information-Retrieval/">Information Retrieval<span>1</span></a></li>
-		
-			<li><a href="/tags/Priority-Queue/">Priority Queue<span>1</span></a></li>
-		
-			<li><a href="/tags/scala/">scala<span>1</span></a></li>
-		
-			<li><a href="/tags/algorithm/">algorithm<span>1</span></a></li>
-		
-			<li><a href="/tags/Trie树/">Trie树<span>1</span></a></li>
-		
-		 
-		</ul>
+	
+	<div id="side_meta">
+		<div class="col-md-3" id="post_meta"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2016-10-28 
 	</div>
+	
 
+	<!-- categories -->
+    
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#categorys"><i class="fa fa-folder"></i></a>	
+    <ul id="categorys" class="tag_box list-unstyled collapse in">
+          
+  <li>
+    <li><a href="/categories/Information-Retrieval/">Information Retrieval<span>1</span></a></li>
+  </li>
 
+    </ul>
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/Deep-Learning/">Deep Learning<span>1</span></a></li> <li><a href="/tags/Information-Retrieval/">Information Retrieval<span>1</span></a></li>
+    </ul>
+	</div>
 		
-			
-<div class="widget">
-  <h4>Recent Posts</h4>
-  <ul class="entry list-unstyled">
-    
-      <li>
-        <a href="/2016/10/28/deep-ir/" ><i class="fa fa-file-o"></i>Deep Learning for Informati...</a>
-      </li>
-    
-      <li>
-        <a href="/2016/01/09/Huffman-Tree-use-priority-queue-in-C/" ><i class="fa fa-file-o"></i>Huffman Tree (use priority ...</a>
-      </li>
-    
-      <li>
-        <a href="/2016/01/09/Trie-in-C/" ><i class="fa fa-file-o"></i>Trie (in C)</a>
-      </li>
-    
-      <li>
-        <a href="/2015/10/28/permutation/" ><i class="fa fa-file-o"></i>生成全排列算法（Scala和C++实现）</a>
-      </li>
-    
-  </ul>
-</div>
 
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	</div>
 		
-			
-<div class="widget">
-	<h4>Links</h4>
-	<ul class="blogroll list-unstyled">
-	
-		<li><i class="fa fa-github"></i><a href="https://github.com/pangolulu" title="My Github account." target="_blank"]);">My Github</a></li>
-	
-		<li><i class="fa fa-weibo"></i><a href="http://weibo.com/u/2137799447" title="My Weibo account." target="_blank"]);">My Weibo</a></li>
-	
-		<li><i class="fa fa-user"></i><a href="https://www.zhihu.com/people/pangolulu" title="My Zhihu account." target="_blank"]);">My Zhihu</a></li>
-	
-	</ul>
-</div>
 
+</div><!-- row -->
 
-		
-	</div> <!-- sidebar -->
-</div> <!-- col-md-3 -->
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'pangolulu' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
 
-	
-	
-</div> <!-- row-fluid -->
 
 
 	</div>
