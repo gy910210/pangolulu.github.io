@@ -164,7 +164,7 @@
 <li>Training ranker with matching scores as features using learning to rank (Ranking Model)</li>
 </ul>
 <p><img src="/assets/img/dl-ir/Approach_in_Modern_IR.png" alt="IR"></p>
-<p>一般这四个步骤都是在一个end-to-end的神经网络结构下进行训练的。这里注意，Matching Model只有唯一一个，Ranking Model只使用这唯一一个Matching Model。</p>
+<p>一般这四个步骤都是在一个end-to-end的神经网络结构下进行训练的。这里注意，Matching Model只有唯一一个，就是说所有的query-document都使用一个Matching Model，Ranking Model只使用这唯一一个Matching Model产生的Matching Score或Matching Vector。</p>
 <p>Deep Learning的方法可以渗透在IR中的不同步骤中，如下图所示，一般包括了Intent和Content的表示和Matching Model的学习。</p>
 <p><img src="/assets/img/dl-ir/Deep_Learning_and_IR.png" alt="IR"></p>
 <p>注意，这里并没有说明Ranking Model，其实Ranking Model可以看做整个神经网络结构的loss function层，不同的learning to rank方法有不同的loss形式，本文只讨论pointwise和pairwise方法，因为这两种方法效率足够高，在实践中应用的最多。</p>
@@ -438,25 +438,25 @@
 		<h4>Tag Cloud</h4>
 		<ul class="tag_box inline list-unstyled">		
 		
-			<li><a href="/tags/Huffman-Tree/">Huffman Tree<span>1</span></a></li>
+			<li><a href="/tags/Cousera/">Cousera<span>1</span></a></li>
+		
+			<li><a href="/tags/Reactive-Programming/">Reactive Programming<span>1</span></a></li>
+		
+			<li><a href="/tags/scala/">scala<span>1</span></a></li>
+		
+			<li><a href="/tags/Priority-Queue/">Priority Queue<span>1</span></a></li>
 		
 			<li><a href="/tags/Trie树/">Trie树<span>1</span></a></li>
 		
-			<li><a href="/tags/Reactive-Programming/">Reactive Programming<span>1</span></a></li>
+			<li><a href="/tags/algorithm/">algorithm<span>1</span></a></li>
+		
+			<li><a href="/tags/Huffman-Tree/">Huffman Tree<span>1</span></a></li>
+		
+			<li><a href="/tags/Information-Retrieval/">Information Retrieval<span>1</span></a></li>
 		
 			<li><a href="/tags/Deep-Learning/">Deep Learning<span>1</span></a></li>
 		
 			<li><a href="/tags/Scala/">Scala<span>1</span></a></li>
-		
-			<li><a href="/tags/Cousera/">Cousera<span>1</span></a></li>
-		
-			<li><a href="/tags/Information-Retrieval/">Information Retrieval<span>1</span></a></li>
-		
-			<li><a href="/tags/scala/">scala<span>1</span></a></li>
-		
-			<li><a href="/tags/algorithm/">algorithm<span>1</span></a></li>
-		
-			<li><a href="/tags/Priority-Queue/">Priority Queue<span>1</span></a></li>
 		
 		 
 		</ul>
