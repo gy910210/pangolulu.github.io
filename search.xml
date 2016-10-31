@@ -7,7 +7,7 @@
       <title><![CDATA[Deep Learning for Information Retrieval]]></title>
       <url>http://pangolulu.github.io/2016/10/28/deep-ir/</url>
       <content type="html"><![CDATA[<p>最近关注了一些Deep Learning在Information Retrieval领域的应用，得益于Deep Model在对文本的表达上展现的优势（比如RNN和CNN），我相信在IR的领域引入Deep Model也会取得很好的效果。</p>
-<p>IR的范围可能会很广，比如传统的Search Engine，Recommendation System或者Question Answering（retrieval based）可能都可以属于IR的范畴。仔细考虑这些应用，不难看出他们都存在一个模式，也就是几个基本需要解决的任务：</p>
+<p>IR的范围可能会很广，比如传统的Search Engine（query retrieves documents），Recommendation System（user retrieves items）或者Retrieval based Question Answering（Question retrieves answers）可能都可以属于IR的范畴。仔细考虑这些应用，不难看出他们都存在一个模式，也就是几个基本需要解决的任务：</p>
 <ol>
 <li>Query（Intent）的表达和Document（Content）的表达？</li>
 <li>Matching Model：maps query-document pairs to a feature vector representation where each component reflects a certain type of similarity, e.g., lexical, syntactic, and semantic。或者这里根据matching vector与参数w直接得到matching score，相当于做了内积。</li>
